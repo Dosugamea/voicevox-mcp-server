@@ -1,0 +1,39 @@
+# ビルドステージ
+FROM node:22-slim AS builder
+
+WORKDIR /app
+
+# 依存関係のインストール
+COPY package.json ./
+RUN npm install
+
+# ソースコードのコピーとビルド
+COPY tsconfig.json ./
+COPY src/ ./src/
+RUN npm run build
+
+# 実行ステージ
+FROM node:22-slim
+# 音声再生に必要なパッケージをインストール
+RUN apt-get update && apt-get install -y \
+    pulseaudio \
+    alsa-utils \
+    libsdl2-dev \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+
+# 本番環境の依存関係のみインストール
+COPY package.json ./
+RUN npm install --only=production
+
+# ビルドステージからビルド成果物をコピー
+COPY --from=builder /app/dist ./dist
+
+# 環境変数の設定
+ENV PULSE_SERVER=/mnt/wslg/PulseServer
+ENV VOICEVOX_API_URL=http://host.docker.internal:50021
+ENV VOICEVOX_SPEAKER_ID=1
+
+# アプリケーションの実行
+CMD ["node", "dist/index.js"]

@@ -1,0 +1,9 @@
+services:
+  voicevox-mcp-python:
+    build: .
+    environment:
+      - PULSE_SERVER=/mnt/wslg/PulseServer
+      - VOICEVOX_API_URL=http://host.docker.internal:50031
+      - VOICEVOX_SPEAKER_ID=919692871
+    volumes:
+      - /mnt/wslg:/mnt/wslg
