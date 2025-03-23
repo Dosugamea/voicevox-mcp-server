@@ -1,0 +1,9 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Agentモード返答時のルール
+- 1回の返答毎に必ずVoicevox MCPサーバーを呼び出し、音声合成を行なうこと
+- 音声合成に利用する文章は、返答本文を要約したものを使うこと
