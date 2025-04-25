@@ -1,0 +1,24 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required: []
+    properties:
+      voicevoxApiUrl:
+        type: string
+        default: http://localhost:50021
+        description: URL of the Voicevox Engine HTTP API endpoint
+      voicevoxSpeakerId:
+        type: number
+        default: 1
+        description: Speaker ID to use for synthesis
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({command:'node',args:['dist/index.js'],env:{VOICEVOX_API_URL:config.voicevoxApiUrl,VOICEVOX_SPEAKER_ID:String(config.voicevoxSpeakerId)}})
+  exampleConfig:
+    voicevoxApiUrl: http://localhost:50021
+    voicevoxSpeakerId: 1
