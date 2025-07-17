@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/dosugamea-voicevox-mcp-server-badge.png)](https://mseep.ai/app/dosugamea-voicevox-mcp-server)
+
 # Voicevox MCP Server
 
 VOICEVOX互換の音声合成サーバー(AivisSpeech / VOICEVOX / COEIROINK) を MCP (Model Context Protocol) 経由で利用するためのサーバーです。
